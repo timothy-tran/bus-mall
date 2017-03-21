@@ -21,12 +21,14 @@ h1 {
 }
 
 .imagesContainer {
-  width: 25%;
+  width: 25%
   display: inline-block;
   margin: 20px;
 }
 
 .images {
-  height: 20em;
-  width: 20em;
+  display: inline-block;
+  border: 2px solid black;
+  height: 100%;
+  width: 100%;
 }
