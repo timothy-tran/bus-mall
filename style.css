@@ -1,0 +1,32 @@
+body {
+  background-color: #e0ebeb;
+}
+
+p {
+  font-family: cursive;
+  font-size: 2em;
+  color: #3d5c5c;
+}
+main {
+  text-align: center;
+  display: block;
+  margin: auto;
+}
+
+h1 {
+  text-align: center;
+  color: #669999;
+  font-family: fantasy;
+  font-size: 4em;
+}
+
+.imagesContainer {
+  width: 25%;
+  display: inline-block;
+  margin: 20px;
+}
+
+.images {
+  height: 20em;
+  width: 20em;
+}
