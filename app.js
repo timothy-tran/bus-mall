@@ -82,6 +82,27 @@ function handleTheClick(){
   }
 };
 
+function barChart() {
+  var barData = {
+    labels : ['bag', 'banana', 'bathroom', 'boots', 'breakfast', 'bubblegum', 'chair', 'cthulhu', 'dog-duck', 'dragon', 'pen', 'pet-sweep', 'scissors', 'shark', 'sweep', 'tauntaun', 'unicorn', 'usb', 'water-can', 'wine-glass'],
+    datasets : [
+      {
+        fillColor : "#48A497",
+        strokeColor : "#48A4D1",
+        data : [456,479,324,569,702,600]
+      },
+      {
+        fillColor : "rgba(73,188,170,0.4)",
+        strokeColor : "rgba(72,174,209,0.4)",
+        data : [364,504,605,400,345,320]
+      }
+    ]
+  }
+  var income = document.getElementById("income").getContext("2d");
+  new Chart(income).Bar(barData);
+};
+
 img1.addEventListener('click', handleTheClick);
 img2.addEventListener('click', handleTheClick);
 img3.addEventListener('click', handleTheClick);
+barChart();
