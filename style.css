@@ -16,10 +16,11 @@ p {
   color: #3d5c5c;
 }
 main {
-  height: 200px;
+  height: 250px;
   width: 700px;
   text-align: center;
   display: block;
+  padding: 10px;
   margin: auto;
 }
 
@@ -42,4 +43,22 @@ h1 {
   border: 2px solid black;
   height: 200px;
   width: 200px;
+  text-align: center;
+  margin-left: 5px;
+}
+
+img:hover {
+  color: #00FF00;
+}
+
+ul {
+  width: 600px;
+}
+
+li {
+  list-style: none;
+  color: grey;
+  font-size: 25px;
+  font-family: cursive;
+  display: block;
 }

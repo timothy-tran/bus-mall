@@ -18,10 +18,14 @@ function Products(itemName, itemPath) {
   productArray.push(this);
 };
 
-for (var i = 0; i < imageArray.length; i++) {
-  var filePath = 'assets/' + imageArray[i];
-  new Products(nameArray[i], filePath);
-}
+function newProduct() {
+  for (var i = 0; i < imageArray.length; i++) {
+    var filePath = 'img/' + imageArray[i];
+    new Products(nameArray[i], filePath);
+  }
+};
+
+newProduct();
 
 function randomImgIndex() {
   return Math.floor(Math.random() * imageArray.length);
@@ -90,7 +94,7 @@ function productClicks(){
   for (var i = 0; i < productArray.length; i++) {
     var li = document.createElement('li');
     var dataStr = productArray[i].itemClick + ' clicks for ' + productArray[i].itemName;
-    li.innerText = dataStr;
+    li.textContent = dataStr;
     ul.appendChild(li);
   }
 }
