@@ -83,24 +83,38 @@ function handleTheClick(){
 };
 
 function barChart() {
-  var barData = {
-    labels : ['bag', 'banana', 'bathroom', 'boots', 'breakfast', 'bubblegum', 'chair', 'cthulhu', 'dog-duck', 'dragon', 'pen', 'pet-sweep', 'scissors', 'shark', 'sweep', 'tauntaun', 'unicorn', 'usb', 'water-can', 'wine-glass'],
-    datasets : [
-      {
-        fillColor : "#48A497",
-        strokeColor : "#48A4D1",
-        data : [456,479,324,569,702,600]
-      },
-      {
-        fillColor : "rgba(73,188,170,0.4)",
-        strokeColor : "rgba(72,174,209,0.4)",
-        data : [364,504,605,400,345,320]
+  var canvas = document.getElementById('canvas');
+  var ctx = canvas.getContext('2d');
+
+  var studentHeights = [71, 65, 67, 70];
+  var studentAges = [82, 50, 33, 12];
+
+  var data = {
+    labels: ['Zach', 'Becky', 'Sean', 'Max'],
+    datasets: [{
+      label: 'Student Heights',
+      data: studentHeights,
+      backgroundColor: 'red'
+    }, {
+      label: 'Student Ages',
+      data: studentAges
+      }]
+    };
+
+    var myChart = new Chart(ctx, {
+      type: 'bar',
+      data: data,
+      options: {
+        scales: {
+          yAxes: [{
+            ticks: {
+              beginAtZero:true
+            }
+          }]
+        }
       }
-    ]
+    });
   }
-  var income = document.getElementById("income").getContext("2d");
-  new Chart(income).Bar(barData);
-};
 
 img1.addEventListener('click', handleTheClick);
 img2.addEventListener('click', handleTheClick);
