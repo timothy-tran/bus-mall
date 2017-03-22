@@ -31,49 +31,50 @@ function randomImgIndex() {
   return Math.floor(Math.random() * imageArray.length);
 };
 
-var prevImgIndexes = []; // <-- holds indexes for images just shown
+var prevImgIndexes = [];
 function randomImage(){
-  var currentImgIndexes = []; // <-- holds indexes for images we're about to show
+  var currentImgIndexes = [];
   while (currentImgIndexes.length < 3) {
     var imgSelector = randomImgIndex();
-    // if image we selected is not in the currentImgIndexes array or prevImgIndexes array...
     if (!currentImgIndexes.includes(imgSelector) && !prevImgIndexes.includes(imgSelector)) {
       currentImgIndexes.push(imgSelector);
     }
-  } // generated 3 unique random image indexes
-  // take the currentImgIndexes and use them to pull actual images into the HTML
+  }
   var prod1 = productArray[currentImgIndexes[0]];
   var prod2 = productArray[currentImgIndexes[1]];
   var prod3 = productArray[currentImgIndexes[2]];
   img1.src = prod1.itemPath;
   img2.src = prod2.itemPath;
   img3.src = prod3.itemPath;
-  // setting the alt attribute so that the product that was clicked can be kept track of
-  img1.alt = currentImgIndexes[0]; // 12
-  img2.alt = currentImgIndexes[1]; // 7
-  img3.alt = currentImgIndexes[2]; // 13
-  // after this point, the images in currentImgIndexes have been shown
-  prevImgIndexes = currentImgIndexes; // make whatever was current now be previous for the next call
-  // images have been shown. let the product objects themselves know that
+
+  img1.alt = currentImgIndexes[0];
+  img2.alt = currentImgIndexes[1];
+  img3.alt = currentImgIndexes[2];
+  prevImgIndexes = currentImgIndexes;
   prod1.imageShown++;
   prod2.imageShown++;
   prod3.imageShown++;
 };
 randomImage();
 
-// when I click an image, it runs the above function to get three new random images.
-// when I click an image, the counter of total clicks goes up one
+function productClicks(){
+  var content = document.getElementById('content');
+  var ul = document.createElement('ul');
+  content.appendChild(ul);
+  for (var i = 0; i < productArray.length; i++) {
+    var li = document.createElement('li');
+    var dataStr = productArray[i].itemClick + ' clicks for ' + productArray[i].itemName;
+    li.textContent = dataStr;
+    ul.appendChild(li);
+  }
+};
+
 var clickLimit = 25;
-function handleTheClick(){ // ...handle each click
+function handleTheClick(){
   randomImage();
   totalClicks++;
-  // get the index of the item that was clicked
   var productIdx = this.alt;
-  // use the index to point at a product in productArray
-  // increment up the number of clicks for the image that was clicked. Property name: itemClick
   productArray[productIdx].itemClick++;
-
-  // if I've clicked 25 times, then disallow clicking
   if (totalClicks === clickLimit) {
     img1.removeEventListener('click', handleTheClick);
     img2.removeEventListener('click', handleTheClick);
@@ -85,16 +86,3 @@ function handleTheClick(){ // ...handle each click
 img1.addEventListener('click', handleTheClick);
 img2.addEventListener('click', handleTheClick);
 img3.addEventListener('click', handleTheClick);
-
-// show the user how many times each product was clicked
-function productClicks(){
-  var content = document.getElementById('content');
-  var ul = document.createElement('ul');
-  content.appendChild(ul);
-  for (var i = 0; i < productArray.length; i++) {
-    var li = document.createElement('li');
-    var dataStr = productArray[i].itemClick + ' clicks for ' + productArray[i].itemName;
-    li.textContent = dataStr;
-    ul.appendChild(li);
-  }
-}
