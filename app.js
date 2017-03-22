@@ -6,9 +6,19 @@ var nameArray = ['bag', 'banana', 'bathroom', 'boots', 'breakfast', 'bubblegum',
 
 var productArray = [];
 var totalClicks = 0;
+var listItemClicked = [];
+var listName = [];
 var img1 = document.getElementById('left');
 var img2 = document.getElementById('center');
 var img3 = document.getElementById('right');
+
+if (localStorage.lsProductArray) {
+  var lsDataStored = JSON.parse(localStorage.lsProductArray);
+  for ( var i = 0; i < lsDataStored.length; i++) {
+    productArray[i].itemClick += lsDataStored[i].itemClick;
+    productArray[i].imageShown += lsDataStored[i].imageShown;
+  }
+}
 
 function Products(itemName, itemPath) {
   this.itemName = itemName;
@@ -57,15 +67,10 @@ function randomImage(){
 randomImage();
 
 function productClicks(){
-  var content = document.getElementById('content');
-  var ul = document.createElement('ul');
-  content.appendChild(ul);
   for (var i = 0; i < productArray.length; i++) {
-    var li = document.createElement('li');
     var dataStr = productArray[i].itemClick + ' clicks for ' + productArray[i].itemName;
-    li.textContent = dataStr;
-    ul.appendChild(li);
   }
+
 };
 
 var clickLimit = 25;
@@ -75,6 +80,7 @@ function handleTheClick(){
   var productIdx = this.alt;
   productArray[productIdx].itemClick++;
   if (totalClicks === clickLimit) {
+    localStorage.lsProductArray = JSON.stringify(productArray);
     img1.removeEventListener('click', handleTheClick);
     img2.removeEventListener('click', handleTheClick);
     img3.removeEventListener('click', handleTheClick);
@@ -82,6 +88,50 @@ function handleTheClick(){
   }
 };
 
+function totalItemClicked (){
+  for (var i = 0; i < productArray.length; i++ ) {
+    listItemClicked.push(productArray[i].itemClick);
+    listName.push(productArray[i].itemName);
+  }
+};
+
+
+function barChart() {
+  var canvas = document.getElementById('canvas');
+  var ctx = canvas.getContext('2d');
+  var listClick = [];
+
+  console.log(listItemClicked);
+  console.log(listName);
+  var data = {
+    labels: nameArray,
+    datasets: [{
+      label: 'Total Clicks',
+      data: listClick,
+      backgroundColor: 'red'
+    }, {
+      label: 'Y-axis',
+      data: totalClicks,
+      }]
+    };
+
+    var myChart = new Chart(ctx, {
+      type: 'bar',
+      data: data,
+      options: {
+        scales: {
+          yAxes: [{
+            ticks: {
+              beginAtZero:true
+            }
+          }]
+        }
+      }
+    });
+  }
+
 img1.addEventListener('click', handleTheClick);
 img2.addEventListener('click', handleTheClick);
 img3.addEventListener('click', handleTheClick);
+
+barChart();

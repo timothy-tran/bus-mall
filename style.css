@@ -63,3 +63,8 @@ li {
   font-size: 20px;
   font-family: Oswald;
 }
+
+.images:hover {
+  cursor: crosshair;
+  opacity: .4;
+}
