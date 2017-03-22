@@ -24,7 +24,6 @@ function newProduct() {
     new Products(nameArray[i], filePath);
   }
 };
-
 newProduct();
 
 function randomImgIndex() {
