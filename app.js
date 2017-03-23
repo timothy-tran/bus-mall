@@ -8,17 +8,20 @@ var productArray = [];
 var totalClicks = 0;
 var listItemClicked = [];
 var listName = [];
+var listShown =[];
 var img1 = document.getElementById('left');
 var img2 = document.getElementById('center');
 var img3 = document.getElementById('right');
 
-if (localStorage.lsProductArray) {
-  var lsDataStored = JSON.parse(localStorage.lsProductArray);
-  for ( var i = 0; i < lsDataStored.length; i++) {
-    productArray[i].itemClick += lsDataStored[i].itemClick;
-    productArray[i].imageShown += lsDataStored[i].imageShown;
+function keepData () {
+  if (localStorage.lsProductArray) {
+    var lsDataStored = JSON.parse(localStorage.lsProductArray);
+    for ( var i = 0; i < lsDataStored.length; i++) {
+      productArray[i].itemClick += lsDataStored[i].itemClick;
+      productArray[i].imageShown += lsDataStored[i].imageShown;
+    }
   }
-}
+};
 
 function Products(itemName, itemPath) {
   this.itemName = itemName;
@@ -69,8 +72,10 @@ randomImage();
 function productClicks(){
   for (var i = 0; i < productArray.length; i++) {
     var dataStr = productArray[i].itemClick + ' clicks for ' + productArray[i].itemName;
-  }
-
+    console.log(dataStr);
+  };
+  getData();
+  barChart();
 };
 
 var clickLimit = 25;
@@ -88,30 +93,27 @@ function handleTheClick(){
   }
 };
 
-function totalItemClicked (){
-  for (var i = 0; i < productArray.length; i++ ) {
+function getData () {
+  for (var i = 0; i < nameArray.length; i++) {
     listItemClicked.push(productArray[i].itemClick);
+    listShown.push(productArray[i].imageShown);
     listName.push(productArray[i].itemName);
   }
 };
 
-
 function barChart() {
   var canvas = document.getElementById('canvas');
   var ctx = canvas.getContext('2d');
-  var listClick = [];
-
-  console.log(listItemClicked);
-  console.log(listName);
+  var test = [1, 2, 3,4, 5]
   var data = {
     labels: nameArray,
     datasets: [{
-      label: 'Total Clicks',
-      data: listClick,
-      backgroundColor: 'red'
+      label: 'Number of Clicks',
+      data: listItemClicked,
+      backgroundColor: '#669999'
     }, {
-      label: 'Y-axis',
-      data: totalClicks,
+      label: 'Product Shown',
+      data: listShown
       }]
     };
 
@@ -133,5 +135,3 @@ function barChart() {
 img1.addEventListener('click', handleTheClick);
 img2.addEventListener('click', handleTheClick);
 img3.addEventListener('click', handleTheClick);
-
-barChart();
