@@ -65,6 +65,7 @@ li {
 }
 
 .images:hover {
+  transition-duration: 1s;
+  transform: scale(1.2);
   cursor: crosshair;
-  opacity: .4;
 }
