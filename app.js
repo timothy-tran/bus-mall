@@ -69,7 +69,6 @@ function randomImage(){
 function productClicks(){
   for (var i = 0; i < productArray.length; i++) {
     var dataStr = productArray[i].itemClick + ' clicks for ' + productArray[i].itemName;
-    console.log(dataStr);
   };
   getData();
   barChart();
