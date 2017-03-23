@@ -1,4 +1,4 @@
-'user strict';
+'use strict';
 
 var imageArray = ['bag.jpg', 'banana.jpg', 'bathroom.jpg', 'boots.jpg', 'breakfast.jpg', 'bubblegum.jpg', 'chair.jpg', 'cthulhu.jpg', 'dog-duck.jpg', 'dragon.jpg', 'pen.jpg', 'pet-sweep.jpg', 'scissors.jpg', 'shark.jpg', 'sweep.png', 'tauntaun.jpg', 'unicorn.jpg', 'usb.gif', 'water-can.jpg', 'wine-glass.jpg'];
 
@@ -6,21 +6,9 @@ var nameArray = ['bag', 'banana', 'bathroom', 'boots', 'breakfast', 'bubblegum',
 
 var productArray = [];
 var totalClicks = 0;
-var listItemClicked = [];
-var listShown =[];
 var img1 = document.getElementById('left');
 var img2 = document.getElementById('center');
 var img3 = document.getElementById('right');
-
-function updateStorage () {
-  if (localStorage.lsProductArray) {
-    var lsDataStored = JSON.parse(localStorage.lsProductArray);
-    for ( var i = 0; i < lsDataStored.length; i++) {
-      productArray[i].itemClick += lsDataStored[i].itemClick;
-      productArray[i].imageShown += lsDataStored[i].imageShown;
-    }
-  }
-};
 
 function Products(itemName, itemPath) {
   this.itemName = itemName;
@@ -36,6 +24,7 @@ function newProduct() {
     new Products(nameArray[i], filePath);
   }
 };
+newProduct();
 
 function randomImgIndex() {
   return Math.floor(Math.random() * imageArray.length);
@@ -65,14 +54,18 @@ function randomImage(){
   prod2.imageShown++;
   prod3.imageShown++;
 };
+randomImage();
 
 function productClicks(){
+  var content = document.getElementById('content');
+  var ul = document.createElement('ul');
+  content.appendChild(ul);
   for (var i = 0; i < productArray.length; i++) {
+    var li = document.createElement('li');
     var dataStr = productArray[i].itemClick + ' clicks for ' + productArray[i].itemName;
-    console.log(dataStr);
-  };
-  getData();
-  barChart();
+    li.textContent = dataStr;
+    ul.appendChild(li);
+  }
 };
 
 var clickLimit = 25;
@@ -82,7 +75,6 @@ function handleTheClick(){
   var productIdx = this.alt;
   productArray[productIdx].itemClick++;
   if (totalClicks === clickLimit) {
-    localStorage.lsProductArray = JSON.stringify(productArray);
     img1.removeEventListener('click', handleTheClick);
     img2.removeEventListener('click', handleTheClick);
     img3.removeEventListener('click', handleTheClick);
@@ -90,26 +82,22 @@ function handleTheClick(){
   }
 };
 
-function getData () {
-  for (var i = 0; i < nameArray.length; i++) {
-    listItemClicked.push(productArray[i].itemClick);
-    listShown.push(productArray[i].imageShown);
-  }
-};
-
 function barChart() {
   var canvas = document.getElementById('canvas');
   var ctx = canvas.getContext('2d');
+
+  var studentHeights = [71, 65, 67, 70];
+  var studentAges = [82, 50, 33, 12];
+
   var data = {
-    labels: nameArray,
+    labels: ['Zach', 'Becky', 'Sean', 'Max'],
     datasets: [{
-      label: 'Number of Clicks',
-      data: listItemClicked,
-      backgroundColor: '#00b300'
+      label: 'Student Heights',
+      data: studentHeights,
+      backgroundColor: 'red'
     }, {
-      label: 'Product Shown',
-      data: listShown,
-      backgroundColor: '#8cb3d9'
+      label: 'Student Ages',
+      data: studentAges
       }]
     };
 
@@ -128,8 +116,7 @@ function barChart() {
     });
   }
 
-newProduct();
-randomImage();
 img1.addEventListener('click', handleTheClick);
 img2.addEventListener('click', handleTheClick);
 img3.addEventListener('click', handleTheClick);
+barChart();
