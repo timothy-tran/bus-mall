@@ -104,16 +104,16 @@ function getData () {
 function barChart() {
   var canvas = document.getElementById('canvas');
   var ctx = canvas.getContext('2d');
-  var test = [1, 2, 3,4, 5]
   var data = {
     labels: nameArray,
     datasets: [{
       label: 'Number of Clicks',
       data: listItemClicked,
-      backgroundColor: '#669999'
+      backgroundColor: '#00b300'
     }, {
       label: 'Product Shown',
-      data: listShown
+      data: listShown,
+      backgroundColor: '#8cb3d9'
       }]
     };
 
