@@ -7,13 +7,12 @@ var nameArray = ['bag', 'banana', 'bathroom', 'boots', 'breakfast', 'bubblegum',
 var productArray = [];
 var totalClicks = 0;
 var listItemClicked = [];
-var listName = [];
 var listShown =[];
 var img1 = document.getElementById('left');
 var img2 = document.getElementById('center');
 var img3 = document.getElementById('right');
 
-function keepData () {
+function updateStorage () {
   if (localStorage.lsProductArray) {
     var lsDataStored = JSON.parse(localStorage.lsProductArray);
     for ( var i = 0; i < lsDataStored.length; i++) {
@@ -37,7 +36,6 @@ function newProduct() {
     new Products(nameArray[i], filePath);
   }
 };
-newProduct();
 
 function randomImgIndex() {
   return Math.floor(Math.random() * imageArray.length);
@@ -67,7 +65,6 @@ function randomImage(){
   prod2.imageShown++;
   prod3.imageShown++;
 };
-randomImage();
 
 function productClicks(){
   for (var i = 0; i < productArray.length; i++) {
@@ -97,7 +94,6 @@ function getData () {
   for (var i = 0; i < nameArray.length; i++) {
     listItemClicked.push(productArray[i].itemClick);
     listShown.push(productArray[i].imageShown);
-    listName.push(productArray[i].itemName);
   }
 };
 
@@ -132,6 +128,8 @@ function barChart() {
     });
   }
 
+newProduct();
+randomImage();
 img1.addEventListener('click', handleTheClick);
 img2.addEventListener('click', handleTheClick);
 img3.addEventListener('click', handleTheClick);
