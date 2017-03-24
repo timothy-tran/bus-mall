@@ -96,7 +96,7 @@ function getData () {
   };
   localStorage.setItem('numClick', JSON.stringify(listItemClicked));
   localStorage.setItem('numShown', JSON.stringify(listShown));
-  localStorage.setItem('nameItem', nameArray);
+  localStorage.setItem('nameItem', JSON.stringify(nameArray));
 };
 
 function barChart() {
@@ -104,8 +104,10 @@ function barChart() {
   var ctx = canvas.getContext('2d');
   var chartsClick = JSON.parse(localStorage.getItem('numClick'));
   var chartsShown = JSON.parse(localStorage.getItem('numShown'));
+  var productName = JSON.parse(localStorage.getItem('nameItem'));
+
   var data = {
-    labels: nameArray,
+    labels: productName,
     datasets: [{
       label: 'Number of Clicks',
       data: chartsClick,
