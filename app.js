@@ -82,7 +82,6 @@ function handleTheClick(){
   var productIdx = this.alt;
   productArray[productIdx].itemClick++;
   if (totalClicks === clickLimit) {
-    localStorage.lsProductArray = JSON.stringify(productArray);
     img1.removeEventListener('click', handleTheClick);
     img2.removeEventListener('click', handleTheClick);
     img3.removeEventListener('click', handleTheClick);
@@ -94,25 +93,29 @@ function getData () {
   for (var i = 0; i < nameArray.length; i++) {
     listItemClicked.push(productArray[i].itemClick);
     listShown.push(productArray[i].imageShown);
-  }
+  };
+  localStorage.setItem('numClick', JSON.stringify(listItemClicked));
+  localStorage.setItem('numShown', JSON.stringify(listShown));
+  localStorage.setItem('nameItem', nameArray);
 };
 
 function barChart() {
   var canvas = document.getElementById('canvas');
   var ctx = canvas.getContext('2d');
+  var chartsClick = JSON.parse(localStorage.getItem('numClick'));
+  var chartsShown = JSON.parse(localStorage.getItem('numShown'));
   var data = {
     labels: nameArray,
     datasets: [{
       label: 'Number of Clicks',
-      data: listItemClicked,
+      data: chartsClick,
       backgroundColor: '#00b300'
     }, {
-      label: 'Product Shown',
-      data: listShown,
+      label: 'Number of Time Product Shown',
+      data: chartsShown,
       backgroundColor: '#8cb3d9'
       }]
     };
-
     var myChart = new Chart(ctx, {
       type: 'bar',
       data: data,
