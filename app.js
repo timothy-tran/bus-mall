@@ -12,7 +12,7 @@ var img1 = document.getElementById('left');
 var img2 = document.getElementById('center');
 var img3 = document.getElementById('right');
 
-function updateStorage () {
+/*function updateStorage () {
   if (localStorage.lsProductArray) {
     var lsDataStored = JSON.parse(localStorage.lsProductArray);
     for ( var i = 0; i < lsDataStored.length; i++) {
@@ -20,7 +20,7 @@ function updateStorage () {
       productArray[i].imageShown += lsDataStored[i].imageShown;
     }
   }
-};
+};*/
 
 function Products(itemName, itemPath) {
   this.itemName = itemName;
@@ -34,7 +34,7 @@ function newProduct() {
   for (var i = 0; i < imageArray.length; i++) {
     var filePath = 'img/' + imageArray[i];
     new Products(nameArray[i], filePath);
-  }
+  };
 };
 
 function randomImgIndex() {
@@ -64,6 +64,7 @@ function randomImage(){
   prod1.imageShown++;
   prod2.imageShown++;
   prod3.imageShown++;
+  getCharts();
 };
 
 function productClicks(){
@@ -98,6 +99,12 @@ function getData () {
   localStorage.setItem('numShown', JSON.stringify(listShown));
   localStorage.setItem('nameItem', JSON.stringify(nameArray));
 };
+
+function getCharts() {
+  if (localStorage.productName) {
+    barCharts();
+  }
+}
 
 function barChart() {
   var canvas = document.getElementById('canvas');
