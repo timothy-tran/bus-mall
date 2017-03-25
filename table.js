@@ -16,10 +16,11 @@ function calPercentage () {;
   }
 };
 
-function createTable(){
+function createTable() {
   for (var i = 0; i < productName.length; i++) {
     var myTRow = document.createElement('tr');
     var tdName = document.createElement('td');
+    tdName.setAttribute('class', 'product');
     tdName.textContent = productName[i];
     myTRow.appendChild(tdName);
     var tdClick = document.createElement('td');

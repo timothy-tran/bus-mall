@@ -105,3 +105,10 @@ td {
   color: red;
   border: 1px solid black;
 }
+
+.product {
+  font-family: cursive;
+  font-weight: bold;
+  color: blue;
+  text-transform: capitalize;
+}
