@@ -98,17 +98,43 @@ a:hover {
 table {
   text-align: center;
   background-color: #ffffcc;
+  margin: auto;
+}
+
+#tabRow {
+  background-color: #8cd9b3;
+  font-family: cursive;
+  font-weight: bold;
 }
 
 td {
-  font-size: 25px;
-  color: red;
-  border: 1px solid black;
+  border-bottom: 1px solid #009999;
+  font-size: 2em;
+  color: #808000;
+  padding: 20px 20px;
 }
 
-.product {
-  font-family: cursive;
-  font-weight: bold;
-  color: blue;
+.line1 {
+  font-family: Hevettica,sans-serif;;
+  font-weight: lighter;
+  color: #1a3365;
   text-transform: capitalize;
+  background-color: #ccccb3;
+}
+
+.line2 {
+  font-family: Hevettica,sans-serif;;
+  font-weight: lighter;
+  color: #4d3d00;
+  text-transform: capitalize;
+  background-color: #a3a375;
+}
+
+#goback {
+  display: block;
+  margin: auto;
+  border: 2px solid #336600;
+  background-color: #476b6b;
+  color: #a3c2c2;
+  border-radius: 5%;
 }
