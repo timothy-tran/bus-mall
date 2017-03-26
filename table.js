@@ -10,11 +10,16 @@ var body = document.getElementsByTagName('body')[0];
 var myTable = document.createElement('table');
 body.appendChild(myTable);
 
-function calPercentage () {;
+function calPercentage () {
   for (var i = 0; i < productName.length; i++) {
-    tabPercent.push(Math.floor(numOfClick[i] / numTimeShown[i] * 100));
-  }
-};
+      if (numTimeShown[i] !== 0) {
+        tabPercent.push(Math.floor(numOfClick[i] / numTimeShown[i] * 100));
+      } else {
+        tabPercent.push(0);
+      };
+  };
+}
+
 function tableHead() {
   var tabHead = document.createElement('tr');
   tabHead.setAttribute('id', 'tabRow');
@@ -47,12 +52,12 @@ function createTable() {
     }
     tdName.textContent = productName[i];
     myTRow.appendChild(tdName);
-    var tdClick = document.createElement('td');
-    tdClick.textContent = numOfClick[i];
-    myTRow.appendChild(tdClick);
     var tdShown = document.createElement('td');
     tdShown.textContent = numTimeShown[i];
     myTRow.appendChild(tdShown);
+    var tdClick = document.createElement('td');
+    tdClick.textContent = numOfClick[i];
+    myTRow.appendChild(tdClick);
     var tdPerct = document.createElement('td');
     tdPerct.textContent = tabPercent[i] + '%';
     myTRow.appendChild(tdPerct);
