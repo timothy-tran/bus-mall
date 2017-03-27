@@ -7,18 +7,20 @@ var nameArray = ['bag', 'banana', 'bathroom', 'boots', 'breakfast', 'bubblegum',
 var productArray = [];
 var totalClicks = 0;
 var listItemClicked = [];
-var listName = [];
+var listShown =[];
 var img1 = document.getElementById('left');
 var img2 = document.getElementById('center');
 var img3 = document.getElementById('right');
 
-if (localStorage.lsProductArray) {
-  var lsDataStored = JSON.parse(localStorage.lsProductArray);
-  for ( var i = 0; i < lsDataStored.length; i++) {
-    productArray[i].itemClick += lsDataStored[i].itemClick;
-    productArray[i].imageShown += lsDataStored[i].imageShown;
+/*function updateStorage () {
+  if (localStorage.lsProductArray) {
+    var lsDataStored = JSON.parse(localStorage.lsProductArray);
+    for ( var i = 0; i < lsDataStored.length; i++) {
+      productArray[i].itemClick += lsDataStored[i].itemClick;
+      productArray[i].imageShown += lsDataStored[i].imageShown;
+    }
   }
-}
+};*/
 
 function Products(itemName, itemPath) {
   this.itemName = itemName;
@@ -32,9 +34,8 @@ function newProduct() {
   for (var i = 0; i < imageArray.length; i++) {
     var filePath = 'img/' + imageArray[i];
     new Products(nameArray[i], filePath);
-  }
+  };
 };
-newProduct();
 
 function randomImgIndex() {
   return Math.floor(Math.random() * imageArray.length);
@@ -63,14 +64,16 @@ function randomImage(){
   prod1.imageShown++;
   prod2.imageShown++;
   prod3.imageShown++;
+  getCharts();
 };
-randomImage();
 
 function productClicks(){
   for (var i = 0; i < productArray.length; i++) {
     var dataStr = productArray[i].itemClick + ' clicks for ' + productArray[i].itemName;
-  }
-
+    console.log(dataStr);
+  };
+  getData();
+  barChart();
 };
 
 var clickLimit = 25;
@@ -80,7 +83,6 @@ function handleTheClick(){
   var productIdx = this.alt;
   productArray[productIdx].itemClick++;
   if (totalClicks === clickLimit) {
-    localStorage.lsProductArray = JSON.stringify(productArray);
     img1.removeEventListener('click', handleTheClick);
     img2.removeEventListener('click', handleTheClick);
     img3.removeEventListener('click', handleTheClick);
@@ -88,33 +90,41 @@ function handleTheClick(){
   }
 };
 
-function totalItemClicked (){
-  for (var i = 0; i < productArray.length; i++ ) {
+function getData () {
+  for (var i = 0; i < nameArray.length; i++) {
     listItemClicked.push(productArray[i].itemClick);
-    listName.push(productArray[i].itemName);
-  }
+    listShown.push(productArray[i].imageShown);
+  };
+  localStorage.setItem('numClick', JSON.stringify(listItemClicked));
+  localStorage.setItem('numShown', JSON.stringify(listShown));
+  localStorage.setItem('nameItem', JSON.stringify(nameArray));
 };
 
+function getCharts() {
+  if (localStorage.productName) {
+    barCharts();
+  }
+}
 
 function barChart() {
   var canvas = document.getElementById('canvas');
   var ctx = canvas.getContext('2d');
-  var listClick = [];
+  var chartsClick = JSON.parse(localStorage.getItem('numClick'));
+  var chartsShown = JSON.parse(localStorage.getItem('numShown'));
+  var productName = JSON.parse(localStorage.getItem('nameItem'));
 
-  console.log(listItemClicked);
-  console.log(listName);
   var data = {
-    labels: nameArray,
+    labels: productName,
     datasets: [{
-      label: 'Total Clicks',
-      data: listClick,
-      backgroundColor: 'red'
+      label: 'Number of Clicks',
+      data: chartsClick,
+      backgroundColor: '#00b300'
     }, {
-      label: 'Y-axis',
-      data: totalClicks,
+      label: 'Number of Time Product Shown',
+      data: chartsShown,
+      backgroundColor: '#8cb3d9'
       }]
     };
-
     var myChart = new Chart(ctx, {
       type: 'bar',
       data: data,
@@ -130,8 +140,8 @@ function barChart() {
     });
   }
 
+newProduct();
+randomImage();
 img1.addEventListener('click', handleTheClick);
 img2.addEventListener('click', handleTheClick);
 img3.addEventListener('click', handleTheClick);
-
-barChart();
